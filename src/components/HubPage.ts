@@ -6,6 +6,7 @@ import { MATRIX_PAGES, pagePath } from "../pages";
  */
 export class HubPage {
 	readonly root: HTMLElement;
+	private footer: HTMLElement;
 
 	constructor() {
 		this.root = document.createElement("main");
@@ -29,17 +30,20 @@ export class HubPage {
 					).join("")}
 				</ul>
 			</nav>
-			<footer class="hub__footer">
-				<p>Codé, Designé &amp; développé par Kam3leoN</p>
-			</footer>
 		`;
+
+		this.footer = document.createElement("footer");
+		this.footer.className = "hub__footer";
+		this.footer.innerHTML = `<p>Codé, Designé &amp; développé par Kam3leoN</p>`;
 	}
 
 	mount(parent: HTMLElement = document.body): void {
 		parent.appendChild(this.root);
+		parent.appendChild(this.footer);
 	}
 
 	destroy(): void {
+		this.footer.remove();
 		this.root.remove();
 	}
 }
