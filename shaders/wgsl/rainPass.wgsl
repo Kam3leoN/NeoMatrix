@@ -44,6 +44,12 @@ struct Config {
 	animateSlant : i32,
 	slantAmplitude : f32,
 	slantSpeed : f32,
+	animateBreath : i32,
+	breathSpeed : f32,
+	breathAmount : f32,
+	glitchEnabled : i32,
+	glitchAmount : f32,
+	glitchSpeed : f32,
 	volumetric : i32,
 	isolateCursor : i32,
 	isolateGlint : i32,
@@ -165,7 +171,11 @@ fn getRainBrightness(simTime : f32, glyphPos : vec2<f32>) -> f32 {
 		columnSpeedOffset = 0.5;
 	}
 	var columnTime = columnTimeOffset + simTime * config.fallSpeed * columnSpeedOffset;
-	var rainTime = (glyphPos.y * 0.01 + columnTime) / config.raindropLength;
+	var dropLength = config.raindropLength;
+	if (bool(config.animateBreath)) {
+		dropLength = dropLength * (1.0 + sin(time.seconds * config.breathSpeed * 2.0 * PI) * config.breathAmount);
+	}
+	var rainTime = (glyphPos.y * 0.01 + columnTime) / dropLength;
 	if (!bool(config.loops)) {
 		rainTime = wobble(rainTime);
 	}
@@ -455,6 +465,16 @@ fn getUV(inputUV : vec2<f32>) -> vec2<f32> {
 		) * config.slantScale + 0.5;
 	}
 
+	if (bool(config.glitchEnabled)) {
+		var cell = floor(time.seconds * config.glitchSpeed);
+		var n1 = fract(sin(cell * 12.9898) * 43758.5453);
+		var n2 = fract(sin(cell * 78.233) * 43758.5453);
+		var jump = (n1 * 2.0 - 1.0) * config.glitchAmount;
+		var spike = step(0.88, n2);
+		uv.x += jump * (0.35 + spike * 2.2) * (1.0 - uv.y * 0.55);
+		uv.x = fract(uv.x);
+	}
+
 	uv.y /= config.glyphHeightToWidth;
 
 	return uv;
@@ -481,6 +501,16 @@ fn getBrightness(raindrop : vec4<f32>, effect : vec4<f32>, uv : vec2<f32>, quadD
 	// Modes that don't fade glyphs set their actual brightness here
 	if (config.brightnessOverride > 0. && base > config.brightnessThreshold && !isCursor) {
 		base = config.brightnessOverride;
+	}
+
+	if (bool(config.glitchEnabled)) {
+		var cell = floor(time.seconds * config.glitchSpeed);
+		var flash = step(0.93, fract(sin(cell * 45.164) * 43758.5453));
+		base += flash * 1.4;
+		glint += flash * 1.8;
+		if (isCursor) {
+			base += flash * 0.8;
+		}
 	}
 
 	base = base * multipliedEffects + addedEffects;

@@ -22,6 +22,10 @@ uniform bool isPolar;
 uniform bool showDebugView;
 uniform bool volumetric;
 uniform bool isolateCursor, isolateGlint;
+uniform float time;
+uniform bool glitchEnabled;
+uniform float glitchAmount;
+uniform float glitchSpeed;
 
 varying vec2 vUV;
 varying vec4 vRaindrop, vSymbol, vEffect;
@@ -65,6 +69,17 @@ vec2 getUV(vec2 uv) {
 		) * slantScale + 0.5;
 	}
 
+	if (glitchEnabled) {
+		float cell = floor(time * glitchSpeed);
+		float n1 = fract(sin(cell * 12.9898) * 43758.5453);
+		float n2 = fract(sin(cell * 78.233) * 43758.5453);
+		float jump = (n1 * 2.0 - 1.0) * glitchAmount;
+		float spike = step(0.88, n2);
+		// Stronger corruption toward the bottom of the screen
+		uv.x += jump * (0.35 + spike * 2.2) * (1.0 - uv.y * 0.55);
+		uv.x = fract(uv.x);
+	}
+
 	uv.y /= glyphHeightToWidth;
 
 	return uv;
@@ -91,6 +106,16 @@ vec3 getBrightness(vec4 raindrop, vec4 effect, float quadDepth, vec2 uv) {
 	// Modes that don't fade glyphs set their actual brightness here
 	if (brightnessOverride > 0. && base > brightnessThreshold && !isCursor) {
 		base = brightnessOverride;
+	}
+
+	if (glitchEnabled) {
+		float cell = floor(time * glitchSpeed);
+		float flash = step(0.93, fract(sin(cell * 45.164) * 43758.5453));
+		base += flash * 1.4;
+		glint += flash * 1.8;
+		if (isCursor) {
+			base += flash * 0.8;
+		}
 	}
 
 	base = base * multipliedEffects + addedEffects;

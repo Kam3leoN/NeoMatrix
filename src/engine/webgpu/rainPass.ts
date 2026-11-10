@@ -23,6 +23,12 @@ const makeConfigBuffer = (device, configUniforms, config, density, gridSize) => 
 		animateSlant: config.animateSlant ? 1 : 0,
 		slantAmplitude: config.slantAmplitude ?? 0,
 		slantSpeed: config.slantSpeed ?? 0.35,
+		animateBreath: config.animateBreath ? 1 : 0,
+		breathSpeed: config.breathSpeed ?? 0.25,
+		breathAmount: config.breathAmount ?? 0.35,
+		glitchEnabled: config.glitch ? 1 : 0,
+		glitchAmount: config.glitchAmount ?? 0.06,
+		glitchSpeed: config.glitchSpeed ?? 8,
 		msdfPxRange: 4,
 	};
 	// console.table(configData);

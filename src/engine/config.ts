@@ -123,6 +123,12 @@ const defaults = {
 	animateSlant: false, // Continuously oscillate slant left/right
 	slantAmplitude: (18 * Math.PI) / 180, // Max swing angle when animateSlant is on
 	slantSpeed: 0.35, // Oscillation speed (Hz-ish via sin(time * speed * TAU-ish))
+	animateBreath: false, // Pulse raindrop length (Oracle)
+	breathSpeed: 0.25,
+	breathAmount: 0.35,
+	glitch: false, // Horizontal jitter + flash corruption
+	glitchAmount: 0.06,
+	glitchSpeed: 8,
 	resolution: 0.75, // An overall scale multiplier
 	useHalfFloat: false,
 	renderer: "regl", // The preferred web graphics API
@@ -487,6 +493,64 @@ const versions = {
 			{ color: hsl(0.3, 0.9, 0.4), at: 0.5 },
 			{ color: hsl(0.32, 1.0, 0.85), at: 1.0 },
 		],
+	},
+	oracle: {
+		font: "gothic",
+		isolateCursor: false,
+		fallSpeed: 0.12,
+		cycleSpeed: 0.02,
+		bloomStrength: 0.95,
+		bloomSize: 0.55,
+		numColumns: 56,
+		raindropLength: 1.0,
+		animateBreath: true,
+		breathSpeed: 0.22,
+		breathAmount: 0.4,
+		palette: [
+			{ color: hsl(0.78, 0.55, 0.0), at: 0.0 },
+			{ color: hsl(0.82, 0.7, 0.25), at: 0.35 },
+			{ color: hsl(0.1, 0.85, 0.55), at: 0.7 },
+			{ color: hsl(0.12, 1.0, 0.85), at: 1.0 },
+		],
+		cursorColor: hsl(0.12, 1, 0.8),
+		cursorIntensity: 1.6,
+	},
+	glitch: {
+		glitch: true,
+		glitchAmount: 0.07,
+		glitchSpeed: 7.5,
+		fallSpeed: 0.4,
+		cycleSpeed: 0.06,
+		cycleFrameSkip: 2,
+		bloomStrength: 0.85,
+		numColumns: 88,
+		raindropLength: 0.7,
+		palette: [
+			{ color: hsl(0.3, 0.9, 0.0), at: 0.0 },
+			{ color: hsl(0.3, 0.95, 0.35), at: 0.4 },
+			{ color: hsl(0.32, 1.0, 0.75), at: 0.85 },
+			{ color: hsl(0.33, 1.0, 1.0), at: 1.0 },
+		],
+		cursorColor: hsl(0.32, 1, 0.95),
+		cursorIntensity: 3,
+	},
+	pills: {
+		effect: "stripes",
+		stripeColors: [
+			{ space: "rgb", values: [0.12, 0.42, 0.95] },
+			{ space: "rgb", values: [0.12, 0.42, 0.95] },
+			{ space: "rgb", values: [0.12, 0.42, 0.95] },
+			{ space: "rgb", values: [0.9, 0.08, 0.14] },
+			{ space: "rgb", values: [0.9, 0.08, 0.14] },
+			{ space: "rgb", values: [0.9, 0.08, 0.14] },
+		],
+		cursorColor: hsl(0, 0, 1),
+		cursorIntensity: 2.4,
+		fallSpeed: 0.35,
+		numColumns: 80,
+		raindropLength: 0.8,
+		bloomStrength: 0.65,
+		ditherMagnitude: 0.04,
 	},
 };
 versions.throwback = versions.operator;

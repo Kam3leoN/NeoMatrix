@@ -87,14 +87,22 @@ export default ({ regl, config, lkg }) => {
 
 	const raindropDoubleBuffer = makeComputeDoubleBuffer(regl, numRows, numColumns);
 	const rainPassRaindrop = loadText("/shaders/glsl/rainPass.raindrop.frag.glsl");
+	const baseRaindropLength = config.raindropLength ?? 0.75;
+	const animateBreath = !!config.animateBreath;
+	const breathSpeed = config.breathSpeed ?? 0.25;
+	const breathAmount = config.breathAmount ?? 0.35;
 	const raindropUniforms = {
 		...commonUniforms,
-		...extractEntries(config, ["brightnessDecay", "fallSpeed", "raindropLength", "loops", "skipIntro"]),
+		...extractEntries(config, ["brightnessDecay", "fallSpeed", "loops", "skipIntro"]),
 	};
 	const raindrop = regl({
 		frag: regl.prop("frag"),
 		uniforms: {
 			...raindropUniforms,
+			raindropLength: ({ time }) => {
+				if (!animateBreath) return baseRaindropLength;
+				return baseRaindropLength * (1 + Math.sin(time * breathSpeed * Math.PI * 2) * breathAmount);
+			},
 			introState: introDoubleBuffer.front,
 			previousRaindropState: raindropDoubleBuffer.back,
 		},
@@ -179,6 +187,9 @@ export default ({ regl, config, lkg }) => {
 		quadSize,
 		slantFromTop,
 		volumetric,
+		glitchEnabled: !!config.glitch,
+		glitchAmount: config.glitchAmount ?? 0.06,
+		glitchSpeed: config.glitchSpeed ?? 8,
 	};
 	const render = regl({
 		blend: {
