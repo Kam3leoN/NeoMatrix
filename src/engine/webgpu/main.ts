@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { structs } from "../../lib/gpu-buffer.js";
+import { structs } from "../../lib/gpu-buffer";
 import { makeUniformBuffer, makePipeline } from "./utils";
 
 import makeRain from "./rainPass";
@@ -10,15 +10,6 @@ import makeImagePass from "./imagePass";
 import makeMirrorPass from "./mirrorPass";
 import makeEndPass from "./endPass";
 import { setupCamera, cameraCanvas, cameraAspectRatio, cameraSize } from "../camera";
-
-const loadJS = (src) =>
-	new Promise((resolve, reject) => {
-		const tag = document.createElement("script");
-		tag.onload = resolve;
-		tag.onerror = reject;
-		tag.src = src;
-		document.body.appendChild(tag);
-	});
 
 const effects = {
 	none: null,
@@ -34,8 +25,6 @@ const effects = {
 };
 
 export default async (canvas, config) => {
-	await loadJS("/lib/gl-matrix.js");
-
 	if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
 		window.ondblclick = () => {
 			if (document.fullscreenElement == null) {

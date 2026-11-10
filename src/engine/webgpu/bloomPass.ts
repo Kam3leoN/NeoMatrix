@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { structs } from "../../lib/gpu-buffer.js";
+import { structs } from "../../lib/gpu-buffer";
 import { makeComputeTarget, loadShader, makeUniformBuffer, makeBindGroup, makePass } from "./utils";
 
 // const makePyramid = makeComputeTarget;

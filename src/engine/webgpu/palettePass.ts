@@ -1,6 +1,6 @@
 // @ts-nocheck
 import colorToRGB from "../colorToRGB";
-import { structs } from "../../lib/gpu-buffer.js";
+import { structs } from "../../lib/gpu-buffer";
 import { loadShader, makeUniformBuffer, makeBindGroup, makeComputeTarget, makePass } from "./utils";
 
 // Maps the brightness of the rendered rain and bloom to colors

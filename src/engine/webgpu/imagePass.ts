@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { structs } from "../../lib/gpu-buffer.js";
+import { structs } from "../../lib/gpu-buffer";
 import { makeComputeTarget, makeUniformBuffer, loadTexture, loadShader, makeBindGroup, makePass } from "./utils";
 
 // Multiplies the rendered rain and bloom by a loaded in image

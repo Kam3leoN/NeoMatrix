@@ -17,7 +17,7 @@ export default defineConfig({
 	plugins: [
 		VitePWA({
 			registerType: "autoUpdate",
-			includeAssets: ["icons/*.png", "assets/**/*", "shaders/**/*", "lib/*.js"],
+			includeAssets: ["icons/*.png", "assets/**/*", "shaders/**/*"],
 			manifest: {
 				name: "NeoMatrix",
 				short_name: "NeoMatrix",

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import createREGL from "../../lib/regl";
 import { makeFullScreenQuad, makePipeline } from "./utils";
 
 import makeRain from "./rainPass";
@@ -26,18 +27,7 @@ const effects = {
 
 const dimensions = { width: 1, height: 1 };
 
-const loadJS = (src) =>
-	new Promise((resolve, reject) => {
-		const tag = document.createElement("script");
-		tag.onload = resolve;
-		tag.onerror = reject;
-		tag.src = src;
-		document.body.appendChild(tag);
-	});
-
 export default async (canvas, config) => {
-	await Promise.all([loadJS("/lib/regl.min.js"), loadJS("/lib/gl-matrix.js")]);
-
 	const resize = () => {
 		const devicePixelRatio = window.devicePixelRatio ?? 1;
 		canvas.width = Math.ceil(canvas.clientWidth * devicePixelRatio * config.resolution);

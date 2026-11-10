@@ -75,7 +75,7 @@ export default async (useHoloplay = false, useRecordedDevice = false) => {
 	if (!useHoloplay) {
 		return interpretDevice(null);
 	}
-	const HoloPlayCore = await import("../../lib/holoplaycore.module.js");
+	const HoloPlayCore = await import("../../lib/holoplaycore");
 	const device = await new Promise(
 		(resolve, reject) =>
 			new HoloPlayCore.Client(

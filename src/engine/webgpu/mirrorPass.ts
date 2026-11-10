@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { structs } from "../../lib/gpu-buffer.js";
+import { structs } from "../../lib/gpu-buffer";
 import { makeComputeTarget, makeUniformBuffer, loadShader, makeBindGroup, makePass } from "./utils";
 
 let start;

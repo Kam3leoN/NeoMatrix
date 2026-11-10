@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  *
  * Meant to conform to the WGSL spec:

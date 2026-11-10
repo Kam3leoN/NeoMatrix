@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { structs } from "../../lib/gpu-buffer.js";
+import { mat4, vec3 } from "../../lib/gl-matrix";
+import { structs } from "../../lib/gpu-buffer";
 import { makeRenderTarget, loadTexture, loadShader, makeUniformBuffer, makeBindGroup, makePass } from "./utils";
 
 const rippleTypes = {
@@ -26,8 +27,6 @@ const makeConfigBuffer = (device, configUniforms, config, density, gridSize) => 
 };
 
 export default ({ config, device, timeBuffer }) => {
-	const { mat4, vec3 } = glMatrix;
-
 	const assets = [
 		loadTexture(device, config.glyphMSDFURL),
 		loadTexture(device, config.glintMSDFURL),

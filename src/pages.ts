@@ -29,6 +29,12 @@ export const MATRIX_PAGES: MatrixPage[] = [
 	{ id: "pride", title: "Pride", blurb: "Pride flag stripe coloration.", params: { effect: "pride" }, accent: "#ff69b4" },
 	{ id: "trans", title: "Trans", blurb: "Trans flag stripe coloration.", params: { effect: "trans" }, accent: "#5bcefa" },
 	{ id: "mirror", title: "Mirror", blurb: "Ripple mirror mode (tap for ripples).", params: { version: "updated", effect: "mirror" }, accent: "#66e0ff" },
+	{ id: "construct", title: "Construct", blurb: "Blue training-construct rain.", params: { version: "construct" }, accent: "#4db8ff" },
+	{ id: "smith", title: "Agent Smith", blurb: "Crimson slanted Agent rain.", params: { version: "smith" }, accent: "#ff2244" },
+	{ id: "zion", title: "Zion", blurb: "Golden underground constellation.", params: { version: "zion" }, accent: "#ffc107" },
+	{ id: "mono", title: "Mono", blurb: "Black & white phosphor rain.", params: { version: "mono" }, accent: "#e0e0e0" },
+	{ id: "slowmo", title: "Slow-mo", blurb: "Ultra-slow cascading glyphs.", params: { version: "slowmo" }, accent: "#66ff99" },
+	{ id: "dense", title: "Dense", blurb: "High-column packed code storm.", params: { version: "dense" }, accent: "#1aff66" },
 ];
 
 export function findPage(id: string | null | undefined): MatrixPage | undefined {

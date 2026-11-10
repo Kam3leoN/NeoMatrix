@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { mat4, vec3 } from "../../lib/gl-matrix";
 import { loadImage, loadText, makePassFBO, makeDoubleBuffer, makePass } from "./utils";
 
 const extractEntries = (src, keys) => Object.fromEntries(Array.from(Object.entries(src)).filter(([key]) => keys.includes(key)));
@@ -212,7 +213,6 @@ export default ({ regl, config, lkg }) => {
 
 	// Camera and transform math for the volumetric mode
 	const screenSize = [1, 1];
-	const { mat4, vec3 } = glMatrix;
 	const transform = mat4.create();
 	if (volumetric && config.isometric) {
 		mat4.rotateX(transform, transform, (Math.PI * 1) / 8);

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import colorToRGB from "../colorToRGB";
-import { structs } from "../../lib/gpu-buffer.js";
+import { structs } from "../../lib/gpu-buffer";
 import { loadShader, make1DTexture, makeUniformBuffer, makeBindGroup, makeComputeTarget, makePass } from "./utils";
 
 // Multiplies the rendered rain and bloom by a 1D gradient texture
