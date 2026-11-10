@@ -35,7 +35,6 @@ export const MATRIX_PAGES: MatrixPage[] = [
 	{ id: "mono", title: "Mono", blurb: "Black & white phosphor rain.", params: { version: "mono" }, accent: "#e0e0e0" },
 	{ id: "slowmo", title: "Slow-mo", blurb: "Ultra-slow cascading glyphs.", params: { version: "slowmo" }, accent: "#66ff99" },
 	{ id: "dense", title: "Dense", blurb: "High-column packed code storm.", params: { version: "dense" }, accent: "#1aff66" },
-	{ id: "oracle", title: "Oracle", blurb: "Amber–violet rain that breathes in and out.", params: { version: "oracle" }, accent: "#e6a0ff" },
 	{ id: "glitch", title: "Glitch", blurb: "Corrupted green code — jumps & flashes.", params: { version: "glitch" }, accent: "#39ff14" },
 	{ id: "pills", title: "Pills", blurb: "Blue pill / red pill stripe rain.", params: { version: "pills" }, accent: "#5b8cff" },
 ];
