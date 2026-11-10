@@ -30,7 +30,7 @@ export class HubPage {
 				</ul>
 			</nav>
 			<footer class="hub__footer">
-				<p>Based on <a href="https://github.com/Rezmason/matrix" target="_blank" rel="noopener">Rezmason/matrix</a></p>
+				<p>Codé, Designé &amp; développé par Kam3leoN</p>
 			</footer>
 		`;
 	}
