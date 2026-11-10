@@ -46,8 +46,20 @@ export default ({ regl, config, lkg }) => {
 
 	// Various effect-related values
 	const rippleType = config.rippleTypeName in rippleTypes ? rippleTypes[config.rippleTypeName] : -1;
-	const slantVec = [Math.cos(config.slant), Math.sin(config.slant)];
-	const slantScale = 1 / (Math.abs(Math.sin(2 * config.slant)) * (Math.sqrt(2) - 1) + 1);
+	const slantFromTop = !!config.slantPivotTop;
+	const animateSlant = !!config.animateSlant;
+	const slantAmplitude = config.slantAmplitude ?? 0;
+	const slantSpeed = config.slantSpeed ?? 0.35;
+	const baseSlant = config.slant ?? 0;
+	const slantAt = (angle) => {
+		const a = angle ?? baseSlant;
+		return {
+			slantAngle: a,
+			slantVec: [Math.cos(a), Math.sin(a)],
+			slantScale: 1 / (Math.abs(Math.sin(2 * a)) * (Math.sqrt(2) - 1) + 1),
+		};
+	};
+	const initialSlant = slantAt(baseSlant);
 	const showDebugView = config.effect === "none";
 
 	const commonUniforms = {
@@ -165,8 +177,7 @@ export default ({ regl, config, lkg }) => {
 		numQuadColumns,
 		numQuadRows,
 		quadSize,
-		slantScale,
-		slantVec,
+		slantFromTop,
 		volumetric,
 	};
 	const render = regl({
@@ -194,6 +205,20 @@ export default ({ regl, config, lkg }) => {
 			msdfPxRange: 4.0,
 			glyphMSDFSize: () => [glyphMSDF.width(), glyphMSDF.height()],
 			glintMSDFSize: () => [glintMSDF.width(), glintMSDF.height()],
+
+			// Live slant: oscillates L/R when animateSlant, optionally pivoted at top
+			slantAngle: ({ time }) => {
+				if (!animateSlant) return baseSlant;
+				return Math.sin(time * slantSpeed * Math.PI * 2) * slantAmplitude;
+			},
+			slantVec: ({ time }) => {
+				const a = animateSlant ? Math.sin(time * slantSpeed * Math.PI * 2) * slantAmplitude : baseSlant;
+				return slantAt(a).slantVec;
+			},
+			slantScale: ({ time }) => {
+				const a = animateSlant ? Math.sin(time * slantSpeed * Math.PI * 2) * slantAmplitude : baseSlant;
+				return slantAt(a).slantScale;
+			},
 
 			camera: regl.prop("camera"),
 			transform: regl.prop("transform"),

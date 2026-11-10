@@ -19,6 +19,10 @@ const makeConfigBuffer = (device, configUniforms, config, density, gridSize) => 
 		rippleType: config.rippleTypeName in rippleTypes ? rippleTypes[config.rippleTypeName] : -1,
 		slantScale: 1 / (Math.abs(Math.sin(2 * config.slant)) * (Math.sqrt(2) - 1) + 1),
 		slantVec: [Math.cos(config.slant), Math.sin(config.slant)],
+		slantFromTop: config.slantPivotTop ? 1 : 0,
+		animateSlant: config.animateSlant ? 1 : 0,
+		slantAmplitude: config.slantAmplitude ?? 0,
+		slantSpeed: config.slantSpeed ?? 0.35,
 		msdfPxRange: 4,
 	};
 	// console.table(configData);

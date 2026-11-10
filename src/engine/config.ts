@@ -119,6 +119,10 @@ const defaults = {
 	],
 	raindropLength: 0.75, // Adjusts the frequency of raindrops (and their length) in a column
 	slant: 0, // The angle at which rain falls; the orientation of the glyph grid
+	slantPivotTop: false, // If true, slant rotates around the top edge (bottom swings)
+	animateSlant: false, // Continuously oscillate slant left/right
+	slantAmplitude: (18 * Math.PI) / 180, // Max swing angle when animateSlant is on
+	slantSpeed: 0.35, // Oscillation speed (Hz-ish via sin(time * speed * TAU-ish))
 	resolution: 0.75, // An overall scale multiplier
 	useHalfFloat: false,
 	renderer: "regl", // The preferred web graphics API
@@ -421,7 +425,11 @@ const versions = {
 			{ color: hsl(0.05, 1.0, 0.9), at: 1.0 },
 		],
 		raindropLength: 1.0,
-		slant: (-8 * Math.PI) / 180,
+		slant: 0,
+		slantPivotTop: true,
+		animateSlant: true,
+		slantAmplitude: (22 * Math.PI) / 180,
+		slantSpeed: 0.28,
 	},
 	zion: {
 		cursorColor: hsl(0.12, 1, 0.75),

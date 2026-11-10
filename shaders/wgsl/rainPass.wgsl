@@ -40,6 +40,10 @@ struct Config {
 	density : f32,
 	slantScale : f32,
 	slantVec : vec2<f32>,
+	slantFromTop : i32,
+	animateSlant : i32,
+	slantAmplitude : f32,
+	slantSpeed : f32,
 	volumetric : i32,
 	isolateCursor : i32,
 	isolateGlint : i32,
@@ -431,6 +435,18 @@ fn getUV(inputUV : vec2<f32>) -> vec2<f32> {
 		var radius = length(uv);
 		var angle = atan2(uv.y, uv.x) / (2.0 * PI) + 0.5;
 		uv = vec2<f32>(fract(angle * 4.0 - 0.5), 1.5 * (1.0 - sqrt(radius)));
+	} else if (bool(config.slantFromTop)) {
+		// Top-fixed pivot: bottom swings continuously L/R when animateSlant is on
+		var slantAngle = atan2(config.slantVec.y, config.slantVec.x);
+		if (bool(config.animateSlant)) {
+			slantAngle = sin(time.seconds * config.slantSpeed * 2.0 * PI) * config.slantAmplitude;
+		}
+		var slantScale = 1.0 / (abs(sin(2.0 * slantAngle)) * (1.41421356237 - 1.0) + 1.0);
+		var pivot = vec2<f32>(0.5, 1.0);
+		var p = uv - pivot;
+		var c = cos(slantAngle);
+		var s = sin(slantAngle);
+		uv = vec2<f32>(p.x * c - p.y * s, p.x * s + p.y * c) * slantScale + pivot;
 	} else {
 		// Apply the slant and a scale to space so the viewport is still fully covered by the geometry
 		uv = vec2<f32>(

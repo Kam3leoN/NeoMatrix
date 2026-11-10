@@ -16,6 +16,8 @@ uniform float brightnessOverride, brightnessThreshold;
 uniform vec2 glyphTextureGridSize;
 uniform vec2 slantVec;
 uniform float slantScale;
+uniform float slantAngle;
+uniform bool slantFromTop;
 uniform bool isPolar;
 uniform bool showDebugView;
 uniform bool volumetric;
@@ -48,6 +50,13 @@ vec2 getUV(vec2 uv) {
 		float radius = length(uv);
 		float angle = atan(uv.y, uv.x) / (2. * PI) + 0.5;
 		uv = vec2(fract(angle * 4. - 0.5), 1.5 * (1. - sqrt(radius)));
+	} else if (slantFromTop) {
+		// Rotate around the top-center so the top stays fixed and the bottom swings L/R
+		vec2 pivot = vec2(0.5, 1.0);
+		vec2 p = uv - pivot;
+		float c = cos(slantAngle);
+		float s = sin(slantAngle);
+		uv = vec2(p.x * c - p.y * s, p.x * s + p.y * c) * slantScale + pivot;
 	} else {
 		// Applies the slant and scales space so the viewport is fully covered
 		uv = vec2(
